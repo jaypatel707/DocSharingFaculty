@@ -30,6 +30,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,7 +39,7 @@ import com.google.firebase.storage.UploadTask;
 public class Fac_Dash extends AppCompatActivity {
 
     Button btn_SelectFile,btn_upload,buttonFetch;
-   private TextView textViewFilename;
+   private TextView textViewFilename,userName;
     String url;
    private FirebaseStorage storage;//useed to stre file .
    private FirebaseDatabase database;//uwed to  save urls
@@ -48,7 +49,7 @@ public class Fac_Dash extends AppCompatActivity {
     String branch,item;
     Spinner spinnerFetchBranch;
     private FirebaseAuth mAuth;
-    String faculty_name;
+    String faculty_name,uname_id,userNameStr;
 
 
 
@@ -58,12 +59,30 @@ public class Fac_Dash extends AppCompatActivity {
         setContentView(R.layout.activity_fac__dash);
 
         mAuth=FirebaseAuth.getInstance();
-
+        userName=findViewById(R.id.userName);
         storage=FirebaseStorage.getInstance();//return an object of firebase storage
         database=FirebaseDatabase.getInstance();//return firebase database obj
 
         btn_SelectFile=findViewById(R.id.btn_SelectFile);
         btn_upload=findViewById(R.id.btn_upload);
+        //FacultyName
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        uname_id=currentFirebaseUser.getUid();
+        DatabaseReference reference=database.getReference();
+        reference.child("UserInfo").child(uname_id).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                userNameStr=dataSnapshot.getValue(String.class);
+                userName.setText("Hello Mr."+userNameStr);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         textViewFilename=findViewById(R.id.txtview_filename);
 
@@ -160,7 +179,7 @@ public class Fac_Dash extends AppCompatActivity {
         final String fileName1=System.currentTimeMillis()+"";
         final String branch1=branch;
         StorageReference storageReference=storage.getReference();// root path
-        storageReference.child(userData).child(branch1).child(fileName).putFile(pdfUri)
+        storageReference.child(branch1).child(fileName).putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
