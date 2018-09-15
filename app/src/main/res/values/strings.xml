@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">DocSharing</string>
+    <string name="textEmailAddress">Email Id:-</string>
+    <string name="registration">Registration</string>
+    <string name="logintitle">Login</string>
+    <string name="regemailhint">xyz@gmail.com</string>
+
+    <string-array name="Branch">
+        <item>CE(Computer Eng)</item>
+        <item>IT(Information Tech)</item>
+        <item>CH(Chemical Eng)</item>
+    </string-array>
+    <string-array name="Semester">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+    </string-array>
+</resources>

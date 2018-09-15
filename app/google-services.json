@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "971842988925",
+    "firebase_url": "https://docsharingt-ccb20.firebaseio.com",
+    "project_id": "docsharingt-ccb20",
+    "storage_bucket": "docsharingt-ccb20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971842988925:android:60e104f6f6e70063",
+        "android_client_info": {
+          "package_name": "com.example.jaykpatel.docsharing_t"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971842988925-lv3481ock0967npb4uj14n81ksrv8lp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jaykpatel.docsharing_t",
+            "certificate_hash": "52adde445b7321e35794938f5513c4df08ba7dff"
+          }
+        },
+        {
+          "client_id": "971842988925-08eg05r8nievr7fjdaipv2153og4ujfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJTgx16BGQ3RwzcFx1KsiNI5lSIcXtq8s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971842988925-08eg05r8nievr7fjdaipv2153og4ujfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
