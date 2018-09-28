@@ -4,16 +4,21 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +41,9 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.util.ArrayList;
+
 public class Fac_Dash extends AppCompatActivity {
 
     Button btn_SelectFile,btn_upload,buttonFetch;
@@ -45,11 +53,13 @@ public class Fac_Dash extends AppCompatActivity {
    private FirebaseDatabase database;//uwed to  save urls
    private Uri pdfUri;//url or path of file
     ProgressDialog progressDialog;
-    Spinner spinner_Branch;
-    String branch,item;
+    Spinner spinner_Branch,spinner_Sem,spinner_sub,spinner_Sub_fetch;
+    String branch,item,fetch_sem,sem,sub_fetch,sub;
     Spinner spinnerFetchBranch;
     private FirebaseAuth mAuth;
     String faculty_name,uname_id,userNameStr;
+    RecyclerView recyclerView;
+    final ArrayList<String> sub_options= new ArrayList<String>();
 
 
 
@@ -86,10 +96,27 @@ public class Fac_Dash extends AppCompatActivity {
 
         textViewFilename=findViewById(R.id.txtview_filename);
 
-        buttonFetch=findViewById(R.id.button_Fetch);
+  //      buttonFetch=findViewById(R.id.button_Fetch);
 
         spinnerFetchBranch=findViewById(R.id.spinnerFatchBranch);
         spinner_Branch=findViewById(R.id.spinner_Branch_);
+        spinner_Sub_fetch=findViewById(R.id.spinner_sub_fetch);
+  //      spinner_Sem=findViewById(R.id.spinner_sem);
+//        spinner_sub=findViewById(R.id.spinner_sub);
+
+    /*    spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+*/
+
         spinner_Branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -98,29 +125,183 @@ public class Fac_Dash extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                Toast.makeText(getApplicationContext(),"Nothing slected",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Nothing selected",Toast.LENGTH_LONG).show();
             }
         });
+//Sem Spinner
+        final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
+        spinner_Sub_fetch.setAdapter(subAdapter);
 
+
+        spinner_Sem=findViewById(R.id.spinner_sem_fetch);
+        spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String fetch_sem=parent.getItemAtPosition(position).toString();
+                resetSub(item,fetch_sem);
+
+            }
+
+
+            private void resetSub(String branch,String fetch_sem) {
+                if (branch.equals("CE(Computer Eng)")) {
+                    if (fetch_sem.equals("Sem-1")) {
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-2")) {
+                        sub_options.add("ELCP2");
+                        sub_options.add("BEEE2");
+                        sub_options.add("Maths21");
+                    } else if (fetch_sem.equals("Sem-3")) {
+                        sub_options.add("ELCP3");
+                        sub_options.add("BEEE3");
+                        sub_options.add("Maths31");
+                    } else if (fetch_sem.equals("Sem-4")) {
+                        sub_options.add("ELCP4");
+                        sub_options.add("BEEE4");
+                        sub_options.add("Maths41");
+                    } else if (fetch_sem.equals("Sem-5")) {
+                        sub_options.add("ELCP5");
+                        sub_options.add("BEEE5");
+                        sub_options.add("Maths15");
+                    } else if (fetch_sem.equals("Sem-6")) {
+                        sub_options.add("ELCP6");
+                        sub_options.add("BEEE6");
+                        sub_options.add("Maths16");
+                    } else if (fetch_sem.equals("Sem-7")) {
+                        sub_options.add("ELCP7");
+                        sub_options.add("BEEE7");
+                        sub_options.add("Maths17");
+                    }
+                }
+                else if(branch.equals("IT(Information Tech)")){
+                    if (fetch_sem.equals("Sem-1") ){
+                        sub_options.add("1ELCP");
+                        sub_options.add("1BEEE");
+                        sub_options.add("1Maths1");
+                    } else if (fetch_sem.equals("Sem-2") ){
+                        sub_options.add("2ELCP");
+                        sub_options.add("2BEEE");
+                        sub_options.add("2Maths1");
+                    } else if (fetch_sem.equals("Sem-3") ){
+                        sub_options.add("3ELCP");
+                        sub_options.add("3BEEE");
+                        sub_options.add("3Maths1");
+                    } else if (fetch_sem.equals("Sem-4") ){
+                        sub_options.add("4ELCP");
+                        sub_options.add("4BEEE");
+                        sub_options.add("4Maths1");
+                    } else if (fetch_sem.equals("Sem-5") ){
+                        sub_options.add("5ELCP");
+                        sub_options.add("5BEEE");
+                        sub_options.add("5Maths1");
+                    } else if (fetch_sem.equals("Sem-6") ){
+                        sub_options.add("6ELCP");
+                        sub_options.add("6BEEE");
+                        sub_options.add("6Maths1");
+                    } else if (fetch_sem.equals("Sem-7") ){
+                        sub_options.add("7ELCP");
+                        sub_options.add("7BEEE");
+                        sub_options.add("7Maths1");
+                    }
+                }
+                else if (branch.equals("CH(Chemical Eng)"))
+                {
+                    if (fetch_sem.equals("Sem-1") ){
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-2") ){
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-3")) {
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-4")) {
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-5") ){
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem.equals("Sem-6")) {
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    } else if (fetch_sem == "Sem-7") {
+                        sub_options.add("ELCP");
+                        sub_options.add("BEEE");
+                        sub_options.add("Maths1");
+                    }
+
+                }
+                final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
+                spinner_Sub_fetch.setAdapter(subAdapter);
+
+
+
+            }
+
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spinnerFetchBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 item = parent.getItemAtPosition(position).toString();
+
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(item);
+
+                databaseReference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        String fileName=dataSnapshot.getKey();
+                        String url=dataSnapshot.getValue(String.class);
+                        ((MyAdapter)recyclerView.getAdapter()).update(fileName,url);
+
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                recyclerView=findViewById(R.id.recyclerView1);
+                //custom adapter
+                //populate recycler views
+                recyclerView.setLayoutManager(new LinearLayoutManager(Fac_Dash.this));
+                MyAdapter myAdapter=new MyAdapter(recyclerView,getApplicationContext(),new ArrayList<String>(),new ArrayList<String>());
+                recyclerView.setAdapter(myAdapter);
+
+
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
 
-        buttonFetch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent=new Intent(Fac_Dash.this,MyRecyclerViewActivity.class);
-                intent.putExtra("Branch_Fetch_Item",item);
-                startActivity(intent);
-            }
-        });
 
         btn_SelectFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,8 +356,12 @@ public class Fac_Dash extends AppCompatActivity {
         final String userData=currentFirebaseUser.getUid();
 
 
-        final String fileName=System.currentTimeMillis()+".pdf";
+       /* final String fileName=System.currentTimeMillis()+".pdf";
         final String fileName1=System.currentTimeMillis()+"";
+        */
+        String filename_test=textViewFilename.getText().toString();
+        final String fileName1=filename_test;
+        final String fileName=filename_test+".pdf";
         final String branch1=branch;
         StorageReference storageReference=storage.getReference();// root path
         storageReference.child(branch1).child(fileName).putFile(pdfUri)
@@ -187,7 +372,7 @@ public class Fac_Dash extends AppCompatActivity {
                         url=taskSnapshot.getDownloadUrl().toString();//url of file
                         DatabaseReference reference=database.getReference();
 
-                        reference.child(userData).child(branch1).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        reference.child(branch1).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
 
@@ -247,7 +432,7 @@ public class Fac_Dash extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);//to fetch file
         startActivityForResult(intent,86);
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //check user has selected file or not
@@ -264,4 +449,44 @@ public class Fac_Dash extends AppCompatActivity {
         }
 
     }
+*/
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    switch (requestCode) {
+        case 86:
+            if (resultCode == RESULT_OK &&  requestCode==86   && data!=null) {
+                // Get the Uri of the selected file
+                pdfUri = data.getData();
+                String uriString = pdfUri.toString();
+                File myFile = new File(uriString);
+                String path = myFile.getAbsolutePath();
+                String displayName = null;
+                String file_Name = null;
+                if (uriString.startsWith("content://")) {
+                    Cursor cursor = null;
+                    try {
+                        cursor = getApplicationContext().getContentResolver().query(pdfUri, null, null, null, null);
+                        if (cursor != null && cursor.moveToFirst()) {
+                            displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+
+                            if(displayName.indexOf(".")>0){
+                                file_Name = displayName.substring(0,displayName.lastIndexOf("."));
+                            }
+                            textViewFilename.setText(file_Name.toString());
+                        }
+                    } finally {
+                        cursor.close();
+                    }
+                } else if (uriString.startsWith("file://")) {
+                    displayName = myFile.getName();
+                    textViewFilename.setText(displayName);
+                }
+            }
+            break;
+    }
+    super.onActivityResult(requestCode, resultCode, data);
+}
+
+
+
 }

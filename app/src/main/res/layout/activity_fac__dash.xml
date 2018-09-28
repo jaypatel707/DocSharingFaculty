@@ -1,77 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Fac_Dash">
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hello Mr."
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <Spinner
+        android:id="@+id/spinner_Branch_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:entries="@array/Branch" />
+    <Spinner
+        android:id="@+id/spinner_sem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:entries="@array/Semester"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_sub">
+
+    </Spinner>
+
+
+
 
     <Button
         android:id="@+id/btn_SelectFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="4dp"
         android:text="Select File" />
 
     <TextView
         android:id="@+id/txtview_filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/btn_SelectFile"
-        android:layout_marginTop="119dp"
+        android:layout_marginBottom="-154dp"
         android:text="No file is selected" />
 
     <Button
         android:id="@+id/btn_upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="64dp"
         android:layout_marginTop="154dp"
         android:text="Upload" />
-
-    <Spinner
-        android:id="@+id/spinner_Branch_"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="16dp"
-        android:entries="@array/Branch" />
-
 
 
     <Button
         android:id="@+id/button_Fetch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btn_SelectFile"
-        android:layout_centerVertical="true"
         android:text="Fetch" />
 
     <Spinner
         android:id="@+id/spinnerFatchBranch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/btn_upload"
-        android:entries="@array/Branch" />
+        android:entries="@array/Branch"
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
+        />
+    <Spinner
+        android:id="@+id/spinner_sem_fetch"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/btn_SelectFile"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="183dp"
-        android:text="Hello Mr."
-        android:textAllCaps="true"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        android:entries="@array/Semester"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_sub_fetch"/>
 
-</RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+
+        android:id="@+id/recyclerView1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+
+</LinearLayout>
