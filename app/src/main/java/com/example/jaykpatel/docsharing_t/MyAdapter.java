@@ -56,6 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView nameOfFiles;
 
+
         public ViewHolder(View itemView)
         {
             super(itemView);
@@ -69,6 +70,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     intent.setType(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse(urls.get(position)));
                     context.startActivity(intent);
+
+
 
                 }
             });

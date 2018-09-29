@@ -60,7 +60,7 @@ public class Fac_Dash extends AppCompatActivity {
     String faculty_name,uname_id,userNameStr;
     RecyclerView recyclerView;
     final ArrayList<String> sub_options= new ArrayList<String>();
-
+    final ArrayList<String> sub_upload_options= new ArrayList<String>();
 
 
     @Override
@@ -96,18 +96,155 @@ public class Fac_Dash extends AppCompatActivity {
 
         textViewFilename=findViewById(R.id.txtview_filename);
 
-  //      buttonFetch=findViewById(R.id.button_Fetch);
+
 
         spinnerFetchBranch=findViewById(R.id.spinnerFatchBranch);
         spinner_Branch=findViewById(R.id.spinner_Branch_);
         spinner_Sub_fetch=findViewById(R.id.spinner_sub_fetch);
-  //      spinner_Sem=findViewById(R.id.spinner_sem);
-//        spinner_sub=findViewById(R.id.spinner_sub);
 
-    /*    spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner_sub=findViewById(R.id.spinner_sub);
+
+        final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_upload_options);
+        spinner_sub.setAdapter(subAdapter);
+       //upload spinner sem updation
+        spinner_Sem=findViewById(R.id.spinner_sem);
+        spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                sem=parent.getItemAtPosition(position).toString();
+                subSpinUpdate(branch,sem);
+
+            }
+            private void subSpinUpdate(String branch,String sem)
+            {
+                sub_upload_options.removeAll(sub_upload_options);
+                switch (branch) {
+
+
+                    case "CE(Computer Eng)":
+                        switch (sem) {
+                            case "Sem-1":
+                                sub_upload_options.add("ELCP");
+                                sub_upload_options.add("BEEE");
+                                sub_upload_options.add("Maths1");
+                                break;
+                            case "Sem-2":
+                               sub_upload_options.add("ELCP2");
+                               sub_upload_options.add("BEEE2");
+                               sub_upload_options.add("Maths21");
+                                break;
+                            case "Sem-3":
+                               sub_upload_options.add("ELCP3");
+                               sub_upload_options.add("BEEE3");
+                               sub_upload_options.add("Maths31");
+                                break;
+                            case "Sem-4":
+                                sub_upload_options.add("ELCP4");
+                                sub_upload_options.add("BEEE4");
+                                sub_upload_options.add("Maths41");
+                                break;
+                            case "Sem-5":
+                                sub_upload_options.add("ELCP5");
+                                sub_upload_options.add("BEEE5");
+                                sub_upload_options.add("Maths15");
+                                break;
+                            case "Sem-6":
+                                sub_upload_options.add("ELCP6");
+                                sub_upload_options.add("BEEE6");
+                                sub_upload_options.add("Maths16");
+                                break;
+                            case "Sem-7":
+                                sub_upload_options.add("ELCP7");
+                                sub_upload_options.add("BEEE7");
+                                sub_upload_options.add("Maths17");
+                                break;
+                        }
+                        break;
+
+                    case "IT(Information Tech)":
+                        switch (sem){
+                            case "Sem-1":
+                                sub_upload_options.add("1ELCP");
+                                sub_upload_options.add("1BEEE");
+                                sub_upload_options.add("1Maths1");
+                                break;
+                            case "Sem-2":
+                               sub_upload_options.add("2ELCP");
+                               sub_upload_options.add("2BEEE");
+                               sub_upload_options.add("2Maths1");
+                                break;
+                            case "Sem-3":
+                               sub_upload_options.add("3ELCP");
+                               sub_upload_options.add("3BEEE");
+                               sub_upload_options.add("3Maths1");
+                                break;
+                            case "Sem-4":
+                               sub_upload_options.add("4ELCP");
+                               sub_upload_options.add("4BEEE");
+                               sub_upload_options.add("4Maths1");
+                                break;
+                            case "Sem-5":
+                                sub_upload_options.add("5ELCP");
+                                sub_upload_options.add("5BEEE");
+                                sub_upload_options.add("5Maths1");
+                                break;
+                            case "Sem-6":
+                               sub_upload_options.add("6ELCP");
+                               sub_upload_options.add("6BEEE");
+                               sub_upload_options.add("6Maths1");
+                                break;
+                            case "Sem-7":
+                               sub_upload_options.add("7ELCP");
+                               sub_upload_options.add("7BEEE");
+                               sub_upload_options.add("7Maths1");
+                                break;
+
+                        }
+                        break;
+                    case "CH(Chemical Eng)":
+                        switch (sem){
+                            case "Sem-1":
+                               sub_upload_options.add("ELCP");
+                               sub_upload_options.add("BEEE");
+                               sub_upload_options.add("Maths1");
+                                break;
+                            case "Sem-2":
+                                sub_upload_options.add("ELCP2");
+                                sub_upload_options.add("BEEE2");
+                                sub_upload_options.add("Maths21");
+                                break;
+                            case "Sem-3":
+                               sub_upload_options.add("ELCP3");
+                               sub_upload_options.add("BEEE3");
+                               sub_upload_options.add("Maths31");
+                                break;
+                            case "Sem-4":
+                               sub_upload_options.add("ELCP4");
+                               sub_upload_options.add("BEEE4");
+                               sub_upload_options.add("Maths41");
+                                break;
+                            case "Sem-5":
+                               sub_upload_options.add("ELCP5");
+                               sub_upload_options.add("BEEE5");
+                               sub_upload_options.add("Maths15");
+                                break;
+                            case "Sem-6":
+                               sub_upload_options.add("ELCP6");
+                               sub_upload_options.add("BEEE6");
+                               sub_upload_options.add("Maths16");
+                                break;
+                            case "Sem-7":
+                                sub_upload_options.add("ELCP7");
+                                sub_upload_options.add("BEEE7");
+                                sub_upload_options.add("Maths17");
+                                break;
+
+                        }
+                        break;
+                }
+                final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_upload_options);
+                spinner_sub.setAdapter(subAdapter);
             }
 
             @Override
@@ -115,7 +252,11 @@ public class Fac_Dash extends AppCompatActivity {
 
             }
         });
-*/
+
+
+
+
+   
 
         spinner_Branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -129,7 +270,7 @@ public class Fac_Dash extends AppCompatActivity {
             }
         });
 //Sem Spinner
-        final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
+        final ArrayAdapter<String> subFetchAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
         spinner_Sub_fetch.setAdapter(subAdapter);
 
 
@@ -144,6 +285,7 @@ public class Fac_Dash extends AppCompatActivity {
 
 
             private void resetSub(String branch,String fetch_sem) {
+                sub_options.removeAll(sub_options);
                 if (branch.equals("CE(Computer Eng)")) {
                     if (fetch_sem.equals("Sem-1")) {
                         sub_options.add("ELCP");
@@ -232,14 +374,14 @@ public class Fac_Dash extends AppCompatActivity {
                         sub_options.add("ELCP");
                         sub_options.add("BEEE");
                         sub_options.add("Maths1");
-                    } else if (fetch_sem == "Sem-7") {
+                    } else if (fetch_sem.equals( "Sem-7")) {
                         sub_options.add("ELCP");
                         sub_options.add("BEEE");
                         sub_options.add("Maths1");
                     }
 
                 }
-                final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
+                final ArrayAdapter<String> subFetchAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
                 spinner_Sub_fetch.setAdapter(subAdapter);
 
 
@@ -252,6 +394,8 @@ public class Fac_Dash extends AppCompatActivity {
 
             }
         });
+
+
 
         spinnerFetchBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -363,6 +507,8 @@ public class Fac_Dash extends AppCompatActivity {
         final String fileName1=filename_test;
         final String fileName=filename_test+".pdf";
         final String branch1=branch;
+        final String sub_db;
+        final String sem_db;
         StorageReference storageReference=storage.getReference();// root path
         storageReference.child(branch1).child(fileName).putFile(pdfUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

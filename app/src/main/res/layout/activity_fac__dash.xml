@@ -24,15 +24,20 @@
         android:entries="@array/Branch" />
     <Spinner
         android:id="@+id/spinner_sem"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:entries="@array/Semester"
+        android:paddingLeft="10dp"
+        android:padding="5dp"
         />
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_sub">
+        android:id="@+id/spinner_sub"
+        android:paddingLeft="20dp"
+        android:padding="10dp"
+        >
 
     </Spinner>
 
@@ -61,12 +66,6 @@
         android:text="Upload" />
 
 
-    <Button
-        android:id="@+id/button_Fetch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fetch" />
-
     <Spinner
         android:id="@+id/spinnerFatchBranch"
         android:layout_width="match_parent"
@@ -79,11 +78,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:entries="@array/Semester"
+        android:paddingLeft="10dp"
+        android:padding="5dp"
         />
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_sub_fetch"/>
+        android:id="@+id/spinner_sub_fetch"
+        android:paddingLeft="20dp"
+        android:padding="10dp"
+        />
 
     <android.support.v7.widget.RecyclerView
 
@@ -92,6 +96,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp" />
+        android:layout_marginRight="15dp"
+        android:layoutMode="clipBounds"/>
 
 </LinearLayout>
