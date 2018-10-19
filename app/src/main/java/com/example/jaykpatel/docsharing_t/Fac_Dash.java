@@ -53,8 +53,8 @@ public class Fac_Dash extends AppCompatActivity {
    private FirebaseDatabase database;//uwed to  save urls
    private Uri pdfUri;//url or path of file
     ProgressDialog progressDialog;
-    Spinner spinner_Branch,spinner_Sem,spinner_sub,spinner_Sub_fetch;
-    String branch,item,fetch_sem,sem,sub_fetch,sub;
+    Spinner spinner_Branch,spinner_Sem,spinner_sub,spinner_Sub_fetch,spinner_sem_fetch;
+    String branch,item,sem_fetch,sem,sub_fetch,sub;
     Spinner spinnerFetchBranch;
     private FirebaseAuth mAuth;
     String faculty_name,uname_id,userNameStr;
@@ -77,14 +77,20 @@ public class Fac_Dash extends AppCompatActivity {
         btn_upload=findViewById(R.id.btn_upload);
         //FacultyName
 
+        spinner_sem_fetch=findViewById(R.id.spinner_sem_fetch);
+        spinner_Sem=findViewById(R.id.spinner_sem);
+        spinner_sub=findViewById(R.id.spinner_sub);
+        spinner_Sub_fetch=findViewById(R.id.spinner_sub_fetch);
+
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         uname_id=currentFirebaseUser.getUid();
+
         DatabaseReference reference=database.getReference();
         reference.child("UserInfo").child(uname_id).child("Name").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userNameStr=dataSnapshot.getValue(String.class);
-                userName.setText("Hello Mr."+userNameStr);
+                userName.setText(userNameStr);
             }
 
             @Override
@@ -100,14 +106,15 @@ public class Fac_Dash extends AppCompatActivity {
 
         spinnerFetchBranch=findViewById(R.id.spinnerFatchBranch);
         spinner_Branch=findViewById(R.id.spinner_Branch_);
-        spinner_Sub_fetch=findViewById(R.id.spinner_sub_fetch);
 
-        spinner_sub=findViewById(R.id.spinner_sub);
+
+
+
 
         final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_upload_options);
         spinner_sub.setAdapter(subAdapter);
        //upload spinner sem updation
-        spinner_Sem=findViewById(R.id.spinner_sem);
+
         spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -205,43 +212,60 @@ public class Fac_Dash extends AppCompatActivity {
                     case "CH(Chemical Eng)":
                         switch (sem){
                             case "Sem-1":
-                               sub_upload_options.add("ELCP");
+                               sub_upload_options.add("PROGRAMMING IN C");
                                sub_upload_options.add("BEEE");
-                               sub_upload_options.add("Maths1");
+                               sub_upload_options.add("ENGINEERING MECHANICS");
+
+                                sub_upload_options.add("MATHEMATICS-I");
                                 break;
                             case "Sem-2":
-                                sub_upload_options.add("ELCP2");
-                                sub_upload_options.add("BEEE2");
-                                sub_upload_options.add("Maths21");
+                                sub_upload_options.add("ELECTRONICS PRINCIPLES");
+                                sub_upload_options.add("MECHANICS OF SOLIDS");
+                                sub_upload_options.add("HEAT POWER");
+                                sub_upload_options.add("MATHEMATICS - II");
                                 break;
                             case "Sem-3":
-                               sub_upload_options.add("ELCP3");
-                               sub_upload_options.add("BEEE3");
-                               sub_upload_options.add("Maths31");
+                               sub_upload_options.add("CHEMISTRY - II");
+                               sub_upload_options.add("CHEMISTRY - I");
+                               sub_upload_options.add("THEORY OF MACHINES & MACHINE DSGN");
+                               sub_upload_options.add("GENERAL CHEMICAL TECHNOLOGY-I");
+                               sub_upload_options.add("MATHEMATICS - III");
+
                                 break;
                             case "Sem-4":
-                               sub_upload_options.add("ELCP4");
-                               sub_upload_options.add("BEEE4");
-                               sub_upload_options.add("Maths41");
+                               sub_upload_options.add("PROCESS CALCULATIONS");
+                               sub_upload_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
+                               sub_upload_options.add("CHEMISTRY - IV");
+                                sub_upload_options.add("CHEMISTRY - III");
+                                sub_upload_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
+                                sub_upload_options.add("MATHEMATICS - IV");
+                                sub_upload_options.add("GENERAL CHEMICAL TECHNOLOGY - II");
+
                                 break;
                             case "Sem-5":
-                               sub_upload_options.add("ELCP5");
-                               sub_upload_options.add("BEEE5");
-                               sub_upload_options.add("Maths15");
-                                break;
+                               sub_upload_options.add("CHEMICAL ENGG TH");
+                               sub_upload_options.add("ENERGY TECHNOLOGY");
+                               sub_upload_options.add("HEAT TRANSFER");
+
                             case "Sem-6":
-                               sub_upload_options.add("ELCP6");
-                               sub_upload_options.add("BEEE6");
-                               sub_upload_options.add("Maths16");
+                               sub_upload_options.add("NUMERICAL TECHNIQUES");
+                               sub_upload_options.add("INSTRUMENTATION & PROCESS CONTROL");
+                               sub_upload_options.add("CHEMICAL SYSTEM MODELLING");
                                 break;
                             case "Sem-7":
-                                sub_upload_options.add("ELCP7");
-                                sub_upload_options.add("BEEE7");
-                                sub_upload_options.add("Maths17");
+                                sub_upload_options.add("OPTIMIZATION TECHNIQUES");
+                                sub_upload_options.add("PROCESS EQUIPMENT DESIGN & DRAWING");
+                                sub_upload_options.add("TRANSPORT PHENOMENA7");
                                 break;
 
                         }
                         break;
+                    case "General Notices":
+                    {
+                        sub_upload_options.removeAll(sub_upload_options);
+                    }
+
+
                 }
                 final ArrayAdapter<String> subAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_upload_options);
                 spinner_sub.setAdapter(subAdapter);
@@ -253,14 +277,49 @@ public class Fac_Dash extends AppCompatActivity {
             }
         });
 
+        spinner_sub.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sub=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Toast.makeText(getApplicationContext(),"Upload side Branch prob",Toast.LENGTH_LONG).show();
+
+            }
+        });
 
 
 
-   
 
+  /*      spinner_Branch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                branch=spinner_Branch.getItemAtPosition(position).toString();
+                switch (branch){
+                    case "CE(Computer Eng)":
+
+                          spinner_Sem.setEnabled(true);
+                          spinner_Sem.setClickable(true);
+
+
+                    case "General Notices":
+                    //    spinner_Sem.setEnabled(false)
+                        //   spinner_Sem.setClickable(false);
+                }
+
+            }
+        });
+*/
         spinner_Branch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                String[] semester=getResources().getStringArray(R.array.Semester);
+
+             //   ArrayAdapter<String> adapterSem=new ArrayAdapter<String>(this,R.layout.,R.id.text,semester);
+
                 branch=parent.getItemAtPosition(position).toString();
             }
 
@@ -269,17 +328,20 @@ public class Fac_Dash extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Nothing selected",Toast.LENGTH_LONG).show();
             }
         });
+
 //Sem Spinner
+
+
         final ArrayAdapter<String> subFetchAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
-        spinner_Sub_fetch.setAdapter(subAdapter);
+        spinner_Sub_fetch.setAdapter(subFetchAdapter);
 
 
-        spinner_Sem=findViewById(R.id.spinner_sem_fetch);
-        spinner_Sem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        spinner_sem_fetch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String fetch_sem=parent.getItemAtPosition(position).toString();
-                resetSub(item,fetch_sem);
+                sem_fetch=parent.getItemAtPosition(position).toString();
+                resetSub(item,sem_fetch);
 
             }
 
@@ -351,38 +413,51 @@ public class Fac_Dash extends AppCompatActivity {
                 else if (branch.equals("CH(Chemical Eng)"))
                 {
                     if (fetch_sem.equals("Sem-1") ){
-                        sub_options.add("ELCP");
+                        sub_options.add("PROGRAMMING IN C");
                         sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("ENGINEERING MECHANICS");
+                        sub_options.add("MATHEMATICS-I");
                     } else if (fetch_sem.equals("Sem-2") ){
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("ELECTRONICS PRINCIPLES");
+                        sub_options.add("MECHANICS OF SOLIDS");
+                        sub_options.add("HEAT POWER");
+                        sub_options.add("MATHEMATICS - II");
                     } else if (fetch_sem.equals("Sem-3")) {
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("CHEMISTRY - II");
+                        sub_options.add("CHEMISTRY - I");
+                        sub_options.add("THEORY OF MACHINES & MACHINE DSGN");
+                        sub_options.add("GENERAL CHEMICAL TECHNOLOGY-I");
+                        sub_options.add("MATHEMATICS - III");
                     } else if (fetch_sem.equals("Sem-4")) {
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("PROCESS CALCULATIONS");
+                        sub_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
+                        sub_options.add("CHEMISTRY - IV");
+                         sub_options.add("CHEMISTRY - III");
+                         sub_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
+                         sub_options.add("MATHEMATICS - IV");
+
                     } else if (fetch_sem.equals("Sem-5") ){
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("CHEMICAL ENGG TH");
+                        sub_options.add("ENERGY TECHNOLOGY");
+                        sub_options.add("HEAT TRANSFER");
                     } else if (fetch_sem.equals("Sem-6")) {
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("NUMERICAL TECHNIQUES");
+                        sub_options.add("INSTRUMENTATION & PROCESS CONTROL");
+                        sub_options.add("CHEMICAL SYSTEM MODELLING");
                     } else if (fetch_sem.equals( "Sem-7")) {
-                        sub_options.add("ELCP");
-                        sub_options.add("BEEE");
-                        sub_options.add("Maths1");
+                        sub_options.add("OPTIMIZATION TECHNIQUES");           
+                        sub_options.add("PROCESS EQUIPMENT DESIGN & DRAWING");
+                        sub_options.add("TRANSPORT PHENOMENA7");              
                     }
 
                 }
+                else if(branch.equals("General Notices")){
+
+                    sub_options.removeAll(sub_options);
+
+                }
                 final ArrayAdapter<String> subFetchAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
-                spinner_Sub_fetch.setAdapter(subAdapter);
+                spinner_Sub_fetch.setAdapter(subFetchAdapter);
 
 
 
@@ -394,6 +469,95 @@ public class Fac_Dash extends AppCompatActivity {
 
             }
         });
+      spinner_Sub_fetch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                sub_fetch=parent.getItemAtPosition(position).toString();
+
+
+                final String sub_fetch_db=sub_fetch;
+                final String sem_fetch_db=sem_fetch;
+                final String item_db=item;
+
+                if(item!="General Notices") {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child(item).child(sem_fetch).child(sub_fetch).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            String fileName = dataSnapshot.getKey();
+                            String url = dataSnapshot.getValue(String.class);
+                            ((MyAdapter) recyclerView.getAdapter()).update(fileName, url);
+
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else
+                {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child(item).addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            String fileName = dataSnapshot.getKey();
+                            String url = dataSnapshot.getValue(String.class);
+                            ((MyAdapter) recyclerView.getAdapter()).update(fileName, url);
+
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                recyclerView=findViewById(R.id.recyclerView1);
+                //custom adapter
+                //populate recycler views
+                recyclerView.setLayoutManager(new LinearLayoutManager(Fac_Dash.this));
+                MyAdapter myAdapter=new MyAdapter(recyclerView,getApplicationContext(),new ArrayList<String>(),new ArrayList<String>());
+                recyclerView.setAdapter(myAdapter);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            Toast.makeText(getApplicationContext(),"Fetch side Branch prob",Toast.LENGTH_LONG).show();
+            }
+        });
 
 
 
@@ -401,9 +565,45 @@ public class Fac_Dash extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 item = parent.getItemAtPosition(position).toString();
 
-                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference(item);
+                if(item.equals("General Notices")) {
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(item);
+                    databaseReference.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            String fileName = dataSnapshot.getKey();
+                            String url = dataSnapshot.getValue(String.class);
+                            ((MyAdapter) recyclerView.getAdapter()).update(fileName, url);
 
-                databaseReference.addChildEventListener(new ChildEventListener() {
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            /*    final String sub_fetch_db=sub_fetch;
+                final String sem_fetch_db=sem_fetch;
+                final String item_db=item;
+
+
+                DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
+                databaseReference.child(item).child(sem_fetch).child(sub_fetch).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         String fileName=dataSnapshot.getKey();
@@ -438,7 +638,7 @@ public class Fac_Dash extends AppCompatActivity {
                 recyclerView.setLayoutManager(new LinearLayoutManager(Fac_Dash.this));
                 MyAdapter myAdapter=new MyAdapter(recyclerView,getApplicationContext(),new ArrayList<String>(),new ArrayList<String>());
                 recyclerView.setAdapter(myAdapter);
-
+*/
 
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -507,53 +707,98 @@ public class Fac_Dash extends AppCompatActivity {
         final String fileName1=filename_test;
         final String fileName=filename_test+".pdf";
         final String branch1=branch;
-        final String sub_db;
-        final String sem_db;
-        StorageReference storageReference=storage.getReference();// root path
-        storageReference.child(branch1).child(fileName).putFile(pdfUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+        final String sub_db=sub;
+        final String sem_db=sem;
 
-                        url=taskSnapshot.getDownloadUrl().toString();//url of file
-                        DatabaseReference reference=database.getReference();
+        if(!branch1.equals("General Notices")) {
+            StorageReference storageReference = storage.getReference();// root path
+            storageReference.child(branch1).child(sem_db).child(sub_db).child(fileName).putFile(pdfUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        reference.child(branch1).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
+                            url = taskSnapshot.getDownloadUrl().toString();//url of file
+                            DatabaseReference reference = database.getReference();
 
-                                if(task.isSuccessful()){
-                                    progressDialog.dismiss();
-                                    Toast.makeText(Fac_Dash.this,"File uploaded Successfully",Toast.LENGTH_LONG).show();
+                            reference.child(branch1).child(sem_db).child(sub_db).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
 
+                                    if (task.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, "File uploaded Successfully", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                                    }
                                 }
-                                else
-                                {
-                                    progressDialog.dismiss();
-                                    Toast.makeText(Fac_Dash.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
+                            });
 
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(Fac_Dash.this, e.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    //track upload progress of file
+                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setProgress(currentProgress);
+                }
+            });
+        }
+        else{
+            StorageReference storageReference = storage.getReference();// root path
+            storageReference.child(branch1).child(fileName).putFile(pdfUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            url = taskSnapshot.getDownloadUrl().toString();//url of file
+                            DatabaseReference reference = database.getReference();
+
+                            reference.child(branch1).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, "File uploaded Successfully", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                                    }
                                 }
-                            }
-                        });
+                            });
 
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Error",e.getMessage());
-                Toast.makeText(Fac_Dash.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(Fac_Dash.this, e.getMessage(), Toast.LENGTH_LONG).show();
 
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                //track upload progress of file
-                int currentProgress=(int) (100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
-                progressDialog.setProgress(currentProgress);
-            }
-        });
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    //track upload progress of file
+                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setProgress(currentProgress);
+                }
+            });
 
+        }
     }
 
     @Override

@@ -9,6 +9,9 @@
         <item>CE(Computer Eng)</item>
         <item>IT(Information Tech)</item>
         <item>CH(Chemical Eng)</item>
+        <item>General Notices</item>
+        <item>Educational Notices</item>
+        <item>Question Paper</item>
     </string-array>
     <string-array name="Semester">
         <item>Sem-1</item>
