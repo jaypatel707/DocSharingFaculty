@@ -46,11 +46,11 @@ import java.util.ArrayList;
 
 public class Fac_Dash extends AppCompatActivity {
 
-    Button btn_SelectFile,btn_upload,buttonFetch;
+    Button btn_SelectFile,btn_upload,btnLogout;
    private TextView textViewFilename,userName;
     String url;
-   private FirebaseStorage storage;//useed to stre file .
-   private FirebaseDatabase database;//uwed to  save urls
+   private FirebaseStorage storage;//used to store file .
+   private FirebaseDatabase database;//used to  save urls
    private Uri pdfUri;//url or path of file
     ProgressDialog progressDialog;
     Spinner spinner_Branch,spinner_Sem,spinner_sub,spinner_Sub_fetch,spinner_sem_fetch;
@@ -81,6 +81,8 @@ public class Fac_Dash extends AppCompatActivity {
         spinner_Sem=findViewById(R.id.spinner_sem);
         spinner_sub=findViewById(R.id.spinner_sub);
         spinner_Sub_fetch=findViewById(R.id.spinner_sub_fetch);
+        btnLogout=findViewById(R.id.btnlogout);
+
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
         uname_id=currentFirebaseUser.getUid();
@@ -101,6 +103,17 @@ public class Fac_Dash extends AppCompatActivity {
 
 
         textViewFilename=findViewById(R.id.txtview_filename);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                finish();
+                Intent intent=new Intent(getApplicationContext(),Login_Activity.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 
@@ -127,44 +140,49 @@ public class Fac_Dash extends AppCompatActivity {
             {
                 sub_upload_options.removeAll(sub_upload_options);
                 switch (branch) {
-
-
                     case "CE(Computer Eng)":
                         switch (sem) {
                             case "Sem-1":
                                 sub_upload_options.add("ELCP");
                                 sub_upload_options.add("BEEE");
                                 sub_upload_options.add("Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-2":
                                sub_upload_options.add("ELCP2");
                                sub_upload_options.add("BEEE2");
                                sub_upload_options.add("Maths21");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-3":
                                sub_upload_options.add("ELCP3");
                                sub_upload_options.add("BEEE3");
                                sub_upload_options.add("Maths31");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-4":
                                 sub_upload_options.add("ELCP4");
                                 sub_upload_options.add("BEEE4");
                                 sub_upload_options.add("Maths41");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-5":
                                 sub_upload_options.add("ELCP5");
                                 sub_upload_options.add("BEEE5");
                                 sub_upload_options.add("Maths15");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-6":
                                 sub_upload_options.add("ELCP6");
                                 sub_upload_options.add("BEEE6");
                                 sub_upload_options.add("Maths16");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-7":
                                 sub_upload_options.add("ELCP7");
                                 sub_upload_options.add("BEEE7");
                                 sub_upload_options.add("Maths17");
+                                sub_upload_options.add("Question Paper");
                                 break;
                         }
                         break;
@@ -175,36 +193,43 @@ public class Fac_Dash extends AppCompatActivity {
                                 sub_upload_options.add("1ELCP");
                                 sub_upload_options.add("1BEEE");
                                 sub_upload_options.add("1Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-2":
                                sub_upload_options.add("2ELCP");
                                sub_upload_options.add("2BEEE");
                                sub_upload_options.add("2Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-3":
                                sub_upload_options.add("3ELCP");
                                sub_upload_options.add("3BEEE");
                                sub_upload_options.add("3Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-4":
                                sub_upload_options.add("4ELCP");
                                sub_upload_options.add("4BEEE");
                                sub_upload_options.add("4Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-5":
                                 sub_upload_options.add("5ELCP");
                                 sub_upload_options.add("5BEEE");
                                 sub_upload_options.add("5Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-6":
                                sub_upload_options.add("6ELCP");
                                sub_upload_options.add("6BEEE");
                                sub_upload_options.add("6Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-7":
                                sub_upload_options.add("7ELCP");
                                sub_upload_options.add("7BEEE");
                                sub_upload_options.add("7Maths1");
+                                sub_upload_options.add("Question Paper");
                                 break;
 
                         }
@@ -217,12 +242,14 @@ public class Fac_Dash extends AppCompatActivity {
                                sub_upload_options.add("ENGINEERING MECHANICS");
 
                                 sub_upload_options.add("MATHEMATICS-I");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-2":
                                 sub_upload_options.add("ELECTRONICS PRINCIPLES");
                                 sub_upload_options.add("MECHANICS OF SOLIDS");
                                 sub_upload_options.add("HEAT POWER");
                                 sub_upload_options.add("MATHEMATICS - II");
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-3":
                                sub_upload_options.add("CHEMISTRY - II");
@@ -230,6 +257,7 @@ public class Fac_Dash extends AppCompatActivity {
                                sub_upload_options.add("THEORY OF MACHINES & MACHINE DSGN");
                                sub_upload_options.add("GENERAL CHEMICAL TECHNOLOGY-I");
                                sub_upload_options.add("MATHEMATICS - III");
+                                sub_upload_options.add("Question Paper");
 
                                 break;
                             case "Sem-4":
@@ -240,30 +268,37 @@ public class Fac_Dash extends AppCompatActivity {
                                 sub_upload_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
                                 sub_upload_options.add("MATHEMATICS - IV");
                                 sub_upload_options.add("GENERAL CHEMICAL TECHNOLOGY - II");
-
+                                sub_upload_options.add("Question Paper");
                                 break;
                             case "Sem-5":
                                sub_upload_options.add("CHEMICAL ENGG TH");
                                sub_upload_options.add("ENERGY TECHNOLOGY");
                                sub_upload_options.add("HEAT TRANSFER");
-
+                                sub_upload_options.add("Question Paper");
                             case "Sem-6":
                                sub_upload_options.add("NUMERICAL TECHNIQUES");
                                sub_upload_options.add("INSTRUMENTATION & PROCESS CONTROL");
                                sub_upload_options.add("CHEMICAL SYSTEM MODELLING");
-                                break;
+                                sub_upload_options.add("Question Paper");
+                               break;
                             case "Sem-7":
                                 sub_upload_options.add("OPTIMIZATION TECHNIQUES");
                                 sub_upload_options.add("PROCESS EQUIPMENT DESIGN & DRAWING");
                                 sub_upload_options.add("TRANSPORT PHENOMENA7");
+                                sub_upload_options.add("Question Paper");
                                 break;
 
                         }
                         break;
                     case "General Notices":
-                    {
+
                         sub_upload_options.removeAll(sub_upload_options);
-                    }
+                        break;
+                  /*  case "Educational Notices":
+
+                        sub_upload_options.removeAll(sub_upload_options);
+                        break;
+*/
 
 
                 }
@@ -321,6 +356,16 @@ public class Fac_Dash extends AppCompatActivity {
              //   ArrayAdapter<String> adapterSem=new ArrayAdapter<String>(this,R.layout.,R.id.text,semester);
 
                 branch=parent.getItemAtPosition(position).toString();
+               if(branch.equals("General Notices") || branch.equals("Educational Notices")) {
+                    spinner_Sem.setEnabled(false);
+                    spinner_sub.setEnabled(false);
+                }
+                else{
+                   spinner_Sem.setEnabled(true);
+                   spinner_sub.setEnabled(true);
+               }
+
+
             }
 
             @Override
@@ -353,30 +398,37 @@ public class Fac_Dash extends AppCompatActivity {
                         sub_options.add("ELCP");
                         sub_options.add("BEEE");
                         sub_options.add("Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-2")) {
                         sub_options.add("ELCP2");
                         sub_options.add("BEEE2");
                         sub_options.add("Maths21");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-3")) {
                         sub_options.add("ELCP3");
                         sub_options.add("BEEE3");
                         sub_options.add("Maths31");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-4")) {
                         sub_options.add("ELCP4");
                         sub_options.add("BEEE4");
                         sub_options.add("Maths41");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-5")) {
                         sub_options.add("ELCP5");
                         sub_options.add("BEEE5");
                         sub_options.add("Maths15");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-6")) {
                         sub_options.add("ELCP6");
                         sub_options.add("BEEE6");
                         sub_options.add("Maths16");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-7")) {
                         sub_options.add("ELCP7");
                         sub_options.add("BEEE7");
                         sub_options.add("Maths17");
+                        sub_options.add("Question Paper");
                     }
                 }
                 else if(branch.equals("IT(Information Tech)")){
@@ -384,30 +436,37 @@ public class Fac_Dash extends AppCompatActivity {
                         sub_options.add("1ELCP");
                         sub_options.add("1BEEE");
                         sub_options.add("1Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-2") ){
                         sub_options.add("2ELCP");
                         sub_options.add("2BEEE");
                         sub_options.add("2Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-3") ){
                         sub_options.add("3ELCP");
                         sub_options.add("3BEEE");
                         sub_options.add("3Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-4") ){
                         sub_options.add("4ELCP");
                         sub_options.add("4BEEE");
                         sub_options.add("4Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-5") ){
                         sub_options.add("5ELCP");
                         sub_options.add("5BEEE");
                         sub_options.add("5Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-6") ){
                         sub_options.add("6ELCP");
                         sub_options.add("6BEEE");
                         sub_options.add("6Maths1");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-7") ){
                         sub_options.add("7ELCP");
                         sub_options.add("7BEEE");
                         sub_options.add("7Maths1");
+                        sub_options.add("Question Paper");
                     }
                 }
                 else if (branch.equals("CH(Chemical Eng)"))
@@ -417,17 +476,20 @@ public class Fac_Dash extends AppCompatActivity {
                         sub_options.add("BEEE");
                         sub_options.add("ENGINEERING MECHANICS");
                         sub_options.add("MATHEMATICS-I");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-2") ){
                         sub_options.add("ELECTRONICS PRINCIPLES");
                         sub_options.add("MECHANICS OF SOLIDS");
                         sub_options.add("HEAT POWER");
                         sub_options.add("MATHEMATICS - II");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-3")) {
                         sub_options.add("CHEMISTRY - II");
                         sub_options.add("CHEMISTRY - I");
                         sub_options.add("THEORY OF MACHINES & MACHINE DSGN");
                         sub_options.add("GENERAL CHEMICAL TECHNOLOGY-I");
                         sub_options.add("MATHEMATICS - III");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-4")) {
                         sub_options.add("PROCESS CALCULATIONS");
                         sub_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
@@ -435,27 +497,37 @@ public class Fac_Dash extends AppCompatActivity {
                          sub_options.add("CHEMISTRY - III");
                          sub_options.add("CHEMICAL ENGG. THERMODYNAMICS-I");
                          sub_options.add("MATHEMATICS - IV");
+                        sub_options.add("Question Paper");
 
                     } else if (fetch_sem.equals("Sem-5") ){
                         sub_options.add("CHEMICAL ENGG TH");
                         sub_options.add("ENERGY TECHNOLOGY");
                         sub_options.add("HEAT TRANSFER");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals("Sem-6")) {
                         sub_options.add("NUMERICAL TECHNIQUES");
                         sub_options.add("INSTRUMENTATION & PROCESS CONTROL");
                         sub_options.add("CHEMICAL SYSTEM MODELLING");
+                        sub_options.add("Question Paper");
                     } else if (fetch_sem.equals( "Sem-7")) {
                         sub_options.add("OPTIMIZATION TECHNIQUES");           
                         sub_options.add("PROCESS EQUIPMENT DESIGN & DRAWING");
-                        sub_options.add("TRANSPORT PHENOMENA7");              
+                        sub_options.add("TRANSPORT PHENOMENA7");
+                        sub_options.add("Question Paper");
                     }
 
                 }
-                else if(branch.equals("General Notices")){
+               /* else if(branch.equals("General Notices")){
 
                     sub_options.removeAll(sub_options);
 
                 }
+             /*   else if(branch.equals("Educational Notices")){
+
+                    sub_options.removeAll(sub_options);
+
+                }
+*/
                 final ArrayAdapter<String> subFetchAdapter=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,sub_options);
                 spinner_Sub_fetch.setAdapter(subFetchAdapter);
 
@@ -479,7 +551,7 @@ public class Fac_Dash extends AppCompatActivity {
                 final String sem_fetch_db=sem_fetch;
                 final String item_db=item;
 
-                if(item!="General Notices") {
+
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                     databaseReference.child(item).child(sem_fetch).child(sub_fetch).addChildEventListener(new ChildEventListener() {
                         @Override
@@ -510,40 +582,7 @@ public class Fac_Dash extends AppCompatActivity {
 
                         }
                     });
-                }
-                else
-                {
-                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                    databaseReference.child(item).addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            String fileName = dataSnapshot.getKey();
-                            String url = dataSnapshot.getValue(String.class);
-                            ((MyAdapter) recyclerView.getAdapter()).update(fileName, url);
 
-                        }
-
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
                 recyclerView=findViewById(R.id.recyclerView1);
                 //custom adapter
                 //populate recycler views
@@ -565,7 +604,9 @@ public class Fac_Dash extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 item = parent.getItemAtPosition(position).toString();
 
-                if(item.equals("General Notices")) {
+                if(item.equals("General Notices") || item.equals("Educational Notices")) {
+                    spinner_sem_fetch.setEnabled(false);
+                    spinner_Sub_fetch.setEnabled(false);
                     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(item);
                     databaseReference.addChildEventListener(new ChildEventListener() {
                         @Override
@@ -596,6 +637,10 @@ public class Fac_Dash extends AppCompatActivity {
 
                         }
                     });
+                }
+                else {
+                    spinner_Sub_fetch.setEnabled(true);
+                    spinner_sem_fetch.setEnabled(true);
                 }
             /*    final String sub_fetch_db=sub_fetch;
                 final String sem_fetch_db=sem_fetch;
@@ -710,51 +755,8 @@ public class Fac_Dash extends AppCompatActivity {
         final String sub_db=sub;
         final String sem_db=sem;
 
-        if(!branch1.equals("General Notices")) {
-            StorageReference storageReference = storage.getReference();// root path
-            storageReference.child(branch1).child(sem_db).child(sub_db).child(fileName).putFile(pdfUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                            url = taskSnapshot.getDownloadUrl().toString();//url of file
-                            DatabaseReference reference = database.getReference();
-
-                            reference.child(branch1).child(sem_db).child(sub_db).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-
-                                    if (task.isSuccessful()) {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(Fac_Dash.this, "File uploaded Successfully", Toast.LENGTH_LONG).show();
-
-                                    } else {
-                                        progressDialog.dismiss();
-                                        Toast.makeText(Fac_Dash.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-                            });
-
-
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.e("Error", e.getMessage());
-                    Toast.makeText(Fac_Dash.this, e.getMessage(), Toast.LENGTH_LONG).show();
-
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                    //track upload progress of file
-                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
-                    progressDialog.setProgress(currentProgress);
-                }
-            });
-        }
-        else{
+        if(branch1.equals("General Notices") || branch1.equals("Educational Notices")) {
             StorageReference storageReference = storage.getReference();// root path
             storageReference.child(branch1).child(fileName).putFile(pdfUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -799,6 +801,52 @@ public class Fac_Dash extends AppCompatActivity {
             });
 
         }
+
+        else{
+            StorageReference storageReference = storage.getReference();// root path
+            storageReference.child(branch1).child(sem_db).child(sub_db).child(fileName).putFile(pdfUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            url = taskSnapshot.getDownloadUrl().toString();//url of file
+                            DatabaseReference reference = database.getReference();
+
+                            reference.child(branch1).child(sem_db).child(sub_db).child(fileName1).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()) {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, "File uploaded Successfully", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(Fac_Dash.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            });
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Error", e.getMessage());
+                    Toast.makeText(Fac_Dash.this, e.getMessage(), Toast.LENGTH_LONG).show();
+
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    //track upload progress of file
+                    int currentProgress = (int) (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                    progressDialog.setProgress(currentProgress);
+                }
+            });
+        }
+
     }
 
     @Override
